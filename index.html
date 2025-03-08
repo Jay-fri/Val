@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Be My Valentine?</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(120deg, #ff758c, #ff7eb3);
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        overflow: hidden;
+      }
+      .container {
+        position: relative;
+      }
+      h1 {
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+      }
+      .buttons {
+        margin-top: 20px;
+        position: relative;
+      }
+      button {
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        margin: 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+      #yes {
+        background-color: #ff4b5c;
+        color: white;
+      }
+      #no {
+        background-color: #333;
+        color: white;
+        position: absolute;
+      }
+      #hover-text {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-top: 20px;
+        color: white;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Gift will you be my Valentine? 💖</h1>
+      <div class="buttons">
+        <button id="yes">YES</button>
+        <button id="no">NO</button>
+      </div>
+      <p id="hover-text"></p>
+    </div>
+
+    <script>
+      const noButton = document.getElementById("no");
+      const yesButton = document.getElementById("yes");
+      const hoverText = document.getElementById("hover-text");
+      let clickCount = 0;
+      const messages = [
+        "Are you sure? 💔",
+        "Think about all the chocolates! 🍫",
+        "I'll be so sad 😢",
+        "You don't want to break my heart, right? ❤️",
+        "Say yes and get unlimited hugs! 🤗",
+      ];
+
+      noButton.addEventListener("mouseenter", function () {
+        if (clickCount < 5) {
+          // Get button dimensions
+          const buttonWidth = noButton.offsetWidth;
+          const buttonHeight = noButton.offsetHeight;
+
+          // Calculate maximum positions that keep the button fully on screen
+          const maxX = window.innerWidth - buttonWidth - 20;
+          const maxY = window.innerHeight - buttonHeight - 20;
+
+          // Generate random positions within safe boundaries (padding of 20px)
+          const x = Math.max(20, Math.min(Math.random() * maxX, maxX - 10));
+          const y = Math.max(20, Math.min(Math.random() * maxY, maxY - 10));
+
+          // Apply the new position
+          noButton.style.position = "fixed";
+          noButton.style.left = x + "px";
+          noButton.style.top = y + "px";
+
+          // Show a random message
+          hoverText.innerText =
+            messages[Math.floor(Math.random() * messages.length)];
+          hoverText.style.display = "block";
+        } else {
+          noButton.innerText = "YES";
+          noButton.id = "yes";
+          noButton.style.backgroundColor = "#ff4b5c";
+          hoverText.style.display = "none";
+        }
+      });
+
+      noButton.addEventListener("click", function () {
+        clickCount++;
+        if (clickCount >= 5) {
+          noButton.innerText = "YES";
+          noButton.id = "yes";
+          noButton.style.backgroundColor = "#ff4b5c";
+          hoverText.style.display = "none";
+        }
+      });
+
+      yesButton.addEventListener("click", function () {
+        document.body.innerHTML = `<h1>Yay! I knew you'd say YES! ❤️🌹</h1>`;
+      });
+    </script>
+  </body>
+</html>
